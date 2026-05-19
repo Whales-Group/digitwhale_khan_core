@@ -7,4 +7,7 @@ license.workspace = true
 [dependencies]
 anyhow.workspace = true
 clap.workspace = true
+rustyline = "14"
+sha2 = "0.10"
+crossterm = "0.27"
 vm-core = { path = "../vm-core" }

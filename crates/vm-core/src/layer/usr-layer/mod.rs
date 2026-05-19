@@ -38,7 +38,7 @@ impl Layer for UserLayer {
         let denied = match event {
             LayerEvent::BeforeMemoryRead { .. } => !self.role.can_read(),
             LayerEvent::BeforeMemoryWrite { .. } => !self.role.can_write(),
-            LayerEvent::BeforeSyscall { syscall_id } => syscall_denied(self.role, *syscall_id),
+            LayerEvent::BeforeSyscall { syscall_id, .. } => syscall_denied(self.role, *syscall_id),
             LayerEvent::BeforeInstruction { .. } => false,
         };
 

@@ -5,7 +5,9 @@ use super::{Vm, VmError};
 
 impl Vm {
     pub fn run(&mut self, program: &Program, logger: &mut dyn Logger) -> Result<(), VmError> {
-        while !self.halted { self.step(program, logger)?; }
+        while !self.halted {
+            self.step(program, logger)?;
+        }
         Ok(())
     }
 
@@ -57,20 +59,24 @@ impl Vm {
     }
 
     fn syscall(&mut self, id: u16, logger: &mut dyn Logger) -> Result<(), VmError> {
-        self.layers.notify(&LayerEvent::BeforeSyscall { syscall_id: id }, &self.memory)?;
+        self.layers.notify(
+            &LayerEvent::BeforeSyscall {
+                syscall_id: id,
+                args: self.syscall_args.clone(),
+            },
+            &self.memory,
+        )?;
+
         let line = if id == SYSCALL_CREATE_LAYER { self.create_layer_from_kernel() }
         else { handle_syscall(id, &self.syscall_args, &self.memory, self.regs.acc) };
+
         self.print_line(line, logger);
         self.syscall_args.clear();
         Ok(())
     }
 
     fn create_layer_from_kernel(&mut self) -> String {
-        let name = self
-            .syscall_args
-            .first()
-            .cloned()
-            .unwrap_or_else(|| "usr-dynamic".to_string());
+        let name = self.syscall_args.first().cloned().unwrap_or_else(|| "usr-dynamic".to_string());
         let priority = self.syscall_args.get(1).and_then(|s| s.parse::<i32>().ok()).unwrap_or(300);
         self.layers.add_user(UserLayer::new(SessionRole::User), priority);
         format!("layer created: name={name} priority={priority}")

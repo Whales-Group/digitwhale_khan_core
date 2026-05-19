@@ -1,6 +1,7 @@
-use std::env;
 use std::fs;
+
 use crate::Memory;
+
 use super::{Layer, LayerError, LayerEvent};
 
 pub struct EnvLayer {
@@ -8,12 +9,6 @@ pub struct EnvLayer {
 }
 
 impl EnvLayer {
-    pub fn new() -> Self {
-        Self {
-            env: env::vars().collect(),
-        }
-    }
-
     pub fn from_dotenv(path: &str) -> Self {
         let contents = fs::read_to_string(path).unwrap_or_default();
         let env = contents
@@ -34,9 +29,8 @@ impl Layer for EnvLayer {
         "env"
     }
 
-    fn on_event(&mut self, event: &LayerEvent, _memory: &Memory) -> Result<(), LayerError> {
-        match event {
-            _ => Ok(()),
-        }
+    fn on_event(&mut self, _event: &LayerEvent, _memory: &Memory) -> Result<(), LayerError> {
+        let _loaded_vars = self.env.len();
+        Ok(())
     }
 }

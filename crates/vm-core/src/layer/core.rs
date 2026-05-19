@@ -12,7 +12,7 @@ pub enum LayerEvent {
     BeforeInstruction { pc: usize, instruction: Instruction },
     BeforeMemoryRead { addr: usize },
     BeforeMemoryWrite { addr: usize, value: i64 },
-    BeforeSyscall { syscall_id: u16 },
+    BeforeSyscall { syscall_id: u16, args: Vec<String> },
 }
 
 pub trait Layer {

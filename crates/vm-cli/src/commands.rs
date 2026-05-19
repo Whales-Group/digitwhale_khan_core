@@ -97,18 +97,21 @@ pub fn print_run_result(vm: &Vm) {
 }
 
 pub fn print_help() {
-    println!("help                               show this help");
-    println!("env-show                           show loaded env config");
-    println!("create-admin <name>               unlock session as admin");
-    println!("run-demo                          run built-in demo bytecode");
-    println!("run <file.vmb>                    run bytecode file");
-    println!("status                            show vm status");
-    println!("layers                            list all layers + state");
-    println!("layer-set <name> <on|off>         set layer active/inactive");
-    println!("mem <addr>                        inspect memory cell");
-    println!("ls [dir]                          list directory via VM syscall");
-    println!("cat <file>                        print file via VM syscall");
-    println!("echo <text...>                    print text via VM syscall");
-    println!("layer-create <name> <priority>    create user layer via kernel syscall");
-    println!("exit|quit                         leave shell");
+    println!("help                                         show this help");
+    println!("env                                          show loaded env config");
+    println!("account create <name> <admin|user|guest>    first account auto-admin; later admin-only");
+    println!("login <name>                                 restore/open session (password prompt)");
+    println!("logout                                       close session (password prompt if required)");
+    println!("settings show                                display current-user settings");
+    println!("settings set session-ttl <secs>              set session timeout");
+    println!("settings set logout-password <on|off>        require password to logout");
+    println!("demo                                         run built-in demo bytecode");
+    println!("run <file.vmb>                               run bytecode file");
+    println!("status                                       show vm status");
+    println!("layers                                       list layers + active state");
+    println!("layer set <name> <on|off>                    toggle layer");
+    println!("mklayer <name> <priority>                    create user layer via syscall");
+    println!("mem <addr>                                   inspect memory cell");
+    println!("ls [dir] | cat <file> | echo <text...>       filesystem/text syscalls");
+    println!("exit|quit                                    leave shell");
 }

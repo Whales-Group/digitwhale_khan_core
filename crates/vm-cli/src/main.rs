@@ -2,8 +2,12 @@ mod cli;
 mod commands;
 mod config;
 mod env_bootstrap;
+mod history;
+mod password_prompt;
+mod session;
 mod programs;
 mod shell;
+mod shell_dispatch;
 
 use std::fs;
 

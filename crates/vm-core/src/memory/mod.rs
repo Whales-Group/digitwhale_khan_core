@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use thiserror::Error;
 
 #[derive(Debug, Error)]
@@ -8,40 +9,42 @@ pub enum MemoryError {
 
 #[derive(Debug, Clone)]
 pub struct Memory {
-    cells: Vec<i64>,
+    data: HashMap<usize, i64>,
+    size: usize,
 }
 
 impl Memory {
     pub fn new(size: usize) -> Self {
         Self {
-            cells: vec![0; size],
+            data: HashMap::new(),
+            size,
         }
     }
 
     pub fn len(&self) -> usize {
-        self.cells.len()
+        self.size
     }
 
     pub fn is_empty(&self) -> bool {
-        self.cells.is_empty()
+        self.size == 0
     }
 
     pub fn read(&self, addr: usize) -> Result<i64, MemoryError> {
-        self.cells
-            .get(addr)
-            .copied()
-            .ok_or(MemoryError::OutOfBounds {
-                addr,
-                len: self.cells.len(),
-            })
+        if addr >= self.size {
+            return Err(MemoryError::OutOfBounds { addr, len: self.size });
+        }
+        Ok(*self.data.get(&addr).unwrap_or(&0))
     }
 
     pub fn write(&mut self, addr: usize, value: i64) -> Result<(), MemoryError> {
-        let len = self.cells.len();
-        let Some(cell) = self.cells.get_mut(addr) else {
-            return Err(MemoryError::OutOfBounds { addr, len });
-        };
-        *cell = value;
+        if addr >= self.size {
+            return Err(MemoryError::OutOfBounds { addr, len: self.size });
+        }
+        if value == 0 {
+            self.data.remove(&addr); // keep sparse — don't store zeroes
+        } else {
+            self.data.insert(addr, value);
+        }
         Ok(())
     }
 }

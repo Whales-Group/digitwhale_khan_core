@@ -51,7 +51,7 @@ impl Layer for CapabilityLayer {
                     })
                 }
             }
-            LayerEvent::BeforeSyscall { syscall_id } => {
+            LayerEvent::BeforeSyscall { syscall_id, .. } => {
                 if self.allowed_syscalls.contains(syscall_id) {
                     Ok(())
                 } else {

@@ -1,6 +1,6 @@
 use super::{
-    CapabilityLayer, LayerOrchestrator, LoggerLayer, MemoryRegion, PlatformIdentityLayer,
-    SecurityLayer,
+    CapabilityLayer, EnvLayer, FileSystemLayer, LayerOrchestrator, LoggerLayer, MemoryRegion,
+    PlatformIdentityLayer, SecurityLayer, SettingsLayer,
 };
 
 #[derive(Debug, Clone, Copy)]
@@ -18,7 +18,10 @@ pub fn apply_platform_profile(
     match profile {
         PlatformProfile::Core => {
             orchestrator.add_system(PlatformIdentityLayer::new("core"), 10);
-            orchestrator.add_system(LoggerLayer, 20);
+            orchestrator.add_system(EnvLayer::from_dotenv(".env"), 20);
+            orchestrator.add_system(SettingsLayer::from_dotenv(".env"), 30);
+            orchestrator.add_system(LoggerLayer, 40);
+            orchestrator.add_system(FileSystemLayer::from_dotenv(".env"), 50);
             orchestrator.add_system(SecurityLayer::new(max), 100);
             orchestrator.add_system(
                 CapabilityLayer::new(
