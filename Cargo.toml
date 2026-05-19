@@ -1,0 +1,22 @@
+[workspace]
+members = [
+  "crates/vm-core",
+  "crates/vm-cli",
+]
+resolver = "2"
+
+[workspace.package]
+edition = "2024"
+license = "MIT"
+authors = ["Jesse Oyofodan"]
+
+[workspace.dependencies]
+anyhow = "1"
+thiserror = "2"
+clap = { version = "4", features = ["derive"] }
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"

@@ -1,0 +1,3 @@
+[alias]
+run-vm = "run -p vm-cli"
+check-all = "check --workspace"
