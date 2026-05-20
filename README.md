@@ -1,39 +1,15 @@
-# JevanKernel (Terminal CLI Phase)
+# JevKen
 
-Current phase is intentionally simple:
+JevKen is a kernel-first project.
 
-- one machine project
-- creates and runs a VM on macOS
-- boots into a terminal kernel shell
+Current active code:
+- `kernel-baremetal/` (no_std kernel foundation)
+- `docs/kernel/` (execution tracker + boot flow)
 
-## Run
-
-```bash
-cargo run -p vm-cli
-```
-
-You will get a prompt:
-
-```text
-jevan-kernel>
-```
-
-## Shell commands
-
-- `help`
-- `run-demo`
-- `run <file.vmb>`
-- `status`
-- `layers`
-- `mem <addr>`
-- `exit`
-
-## Bytecode utility
-
-```bash
-cargo run -p vm-cli -- --dump-sample-bytecode sample.vmb
-```
-
-## Scope note
-
-All app packaging/platform support is removed for now so we can test core VM behavior quickly. We can reintroduce channels later in stages.
+## Current status
+The codebase is reset for a fresh kernel path focused on:
+- boot/entrypoint
+- memory
+- interrupts
+- drivers
+- tasking

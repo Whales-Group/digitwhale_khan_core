@@ -1,3 +1,7 @@
 [alias]
 run-vm = "run -p vm-cli"
 check-all = "check --workspace"
+test-native = "test --target aarch64-apple-darwin"
+
+[build]
+target = "aarch64-unknown-uefi"
