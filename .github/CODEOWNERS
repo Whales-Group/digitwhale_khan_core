@@ -1,0 +1,16 @@
+# Default owners
+* @Jesse-Dan
+
+# Kernel core
+/kernel-baremetal/src/ @Jesse-Dan
+
+# Build system
+/kernel-baremetal/Cargo.toml @Jesse-Dan
+/Cargo.toml @Jesse-Dan
+/.cargo/ @Jesse-Dan
+
+# Documentation
+/docs/ @Jesse-Dan
+
+# CI/CD
+/.github/ @Jesse-Dan
